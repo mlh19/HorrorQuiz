@@ -22,8 +22,37 @@ var questions = [
     },
     {
         question : "Why did the parents kill the human Freddy Krueger?",
-        choices :  ["The parents weren't fond of his sweater", "Freddy was possesed", "Freddy killed children", "The parents didn't like Freddy living on their street. "],
-        answer : "He killed children"
-        
+        choices :  ["The parents weren't fond of his sweater", "Freddy was possesed", "Freddy killed their children", "The parents didn't like Freddy living on their street"],
+        answer : "Freddy killed their children"
     }
 ];
+
+var timer = new Timer();
+timer.start();
+
+timer.addEventListener('secondsUpdated', function (e) {
+    $('#basicUsage').html(timer.getTimeValues().toString());
+});
+
+
+
+
+
+
+// Update the count down every 1 second
+// var x = setInterval(function() {
+    
+// // Time calculations for minutes and seconds
+//   var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+//   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+//   // Output the result in an element with id="demo"
+//   document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+//   + minutes + "m " + seconds + "s ";
+    
+//   // If the count down is over, write some text 
+//   if (distance < 0) {
+//     clearInterval(x);
+//     document.getElementById("demo").innerHTML = "EXPIRED";
+//   }
+// }, 1000);
