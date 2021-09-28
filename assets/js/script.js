@@ -1,3 +1,11 @@
+var countdown = 60 
+var countdownEl = document.getElementById ("countdown")
+var start = document.getElementById ("start-quiz")
+var index = 0
+var title = document.getElementById ("title") 
+var quizEl = document.getElementById ("quiz")
+
+
 // array of questions, choices, and answers
 var questions = [
     {
@@ -27,32 +35,48 @@ var questions = [
     }
 ];
 
-var timer = new Timer();
-timer.start();
-
-timer.addEventListener('secondsUpdated', function (e) {
-    $('#basicUsage').html(timer.getTimeValues().toString());
-});
-
-
-
-
-
-
-// Update the count down every 1 second
-// var x = setInterval(function() {
+function timer (){
+    setInterval(function(){ 
+        console.log("yes")
+        countdown--
+        countdownEl.textContent = countdown
+    }, 1000);
     
-// // Time calculations for minutes and seconds
-//   var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-//   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+}
+
+
+function startQuiz (){
+     timer();
+     getQuestion ();
+}
+function getQuestion () {
+   var question1 = questions [index];
+//    console.log(question1) 
+   title.textContent = question1.question;
+   for (let i = 0; i < question1.choices.length; i++) {
+       const element = question1.choices[i];
+    //    console.log(element)
+       var choicesBtn = document.createElement ("button");
+       choicesBtn.textContent= element;
+       quizEl.append(choicesBtn);
+       choicesBtn.addEventListener ("click", handleResponse)
+
+
+   }
+}
+function handleResponse (){
+    index++
+    var buttonAll = document.querySelectorAll ("button");
     
-//   // Output the result in an element with id="demo"
-//   document.getElementById("demo").innerHTML = days + "d " + hours + "h "
-//   + minutes + "m " + seconds + "s ";
-    
-//   // If the count down is over, write some text 
-//   if (distance < 0) {
-//     clearInterval(x);
-//     document.getElementById("demo").innerHTML = "EXPIRED";
-//   }
-// }, 1000);
+    for (let i = 0; i < buttonAll.length; i++) {
+    buttonAll[i].remove();
+
+    }
+    getQuestion ();
+
+
+}
+
+start.addEventListener ("click", startQuiz)
+
+
