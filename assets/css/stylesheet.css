@@ -1,0 +1,36 @@
+* {
+    background-color: black;
+    color: darkred;
+    text-align: center;
+    justify-content: center;
+}
+/* Tile of the quiz (Horror Movie Quiz) */
+#quiz-name {
+    font-size: 5rem;
+}
+/* Timer */
+#countdown {
+    color:darkred;
+    font-size: 4rem;   
+}
+
+#quiz {
+
+}
+/* Quiz Questions */
+#title {
+    justify-content:center;
+    text-align: center;
+    font-size: 2rem;
+}
+/* Start Button */
+#start-quiz {
+    width: 150px;
+    height: 100px;
+}
+
+button {
+    width: 275px;
+    height: 100px;
+    font-size: medium;
+}

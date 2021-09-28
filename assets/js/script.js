@@ -30,7 +30,7 @@ var questions = [
     },
     {
         question : "Why did the parents kill the human Freddy Krueger?",
-        choices :  ["The parents weren't fond of his sweater", "Freddy was possesed", "Freddy killed their children", "The parents didn't like Freddy living on their street"],
+        choices :  ["The parents weren't fond of his sweater", "Freddy was possesed", "Freddy killed their children", "It was by an accidental fire"],
         answer : "Freddy killed their children"
     }
 ];
@@ -38,17 +38,19 @@ var questions = [
 function timer (){
     setInterval(function(){ 
         console.log("yes")
+        if (countdown < 0) {}
         countdown--
-        countdownEl.textContent = countdown
+        countdownEl.textContent = countdown;
     }, 1000);
     
 }
 
-
+//Start timer count down when the start button is selected. 
 function startQuiz (){
      timer();
      getQuestion ();
 }
+//Quiz Questions
 function getQuestion () {
    var question1 = questions [index];
 //    console.log(question1) 
