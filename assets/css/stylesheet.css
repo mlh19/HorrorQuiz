@@ -3,18 +3,22 @@
     color: darkred;
     text-align: center;
     justify-content: center;
+    background-image:url("https://cdn.shopify.com/s/files/1/2490/1560/products/saw02_691aeb36-98a4-496e-a256-3097c931002a_800x.jpg?v=1563673283"); 
+    background-size:initial;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
 }
+
 /* Tile of the quiz (Horror Movie Quiz) */
 #quiz-name {
+    font-family: 'Shlop', sans-serif;
     font-size: 5rem;
 }
+
 /* Timer */
 #countdown {
     color:darkred;
     font-size: 4rem;   
-}
-
-#quiz {
 }
 
 /* Quiz Questions */
@@ -30,16 +34,30 @@
     height: 75px;
     margin-top: 100px;
     display: inline-block;
-    color:darkred;
+    color:white;
 }
 
 button {
     width: 250px;
-    height: 120px;
+    height: 80px;
     margin-right: 20px;
     /* margin-top: 35px; */
     font-size: medium;
     border-color: darkred;
     color: white;
     /* margin: 20px; */
+}
+
+#saveInitialsButton {
+    color: white;
+    width: 275px;
+    height: 80px;
+    margin: 30px 30px 30px 30px;
+    /* padding: 0px 20px 0px 20px; */
+}
+
+#saveScoreDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
