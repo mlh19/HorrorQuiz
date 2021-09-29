@@ -1,3 +1,4 @@
+/* Universial Style  */
 * {
     background-color: black;
     color: darkred;
@@ -28,6 +29,7 @@
     font-size: 2rem;
     margin-bottom: 35px;
 }
+
 /* Start Button */
 #startButton {
     width: 250px;
@@ -37,6 +39,7 @@
     color:white;
 }
 
+/* Format for all buttons */
 button {
     width: 250px;
     height: 80px;
@@ -47,7 +50,7 @@ button {
     color: white;
     /* margin: 20px; */
 }
-
+/* Initials button */
 #saveInitialsButton {
     color: white;
     width: 275px;
@@ -56,12 +59,14 @@ button {
     /* padding: 0px 20px 0px 20px; */
 }
 
+/* Save score button */
 #saveScoreDiv {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+/* User enter initials */
 #initialsLabel {
     color: white; 
 }

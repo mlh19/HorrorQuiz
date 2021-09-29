@@ -5,6 +5,7 @@ var title = document.getElementById ("title")
 var quizEl = document.getElementById ("quiz")
 var saveInitialsButton = document.getElementById("saveInitialsButton");
 
+
 // Quiz Variables
 var currentQuestionIndex = 0;
 var countdown = 60;
@@ -41,13 +42,18 @@ var questions = [
     }
 ];
 
+//Text for seconds remaining.
+function updateTimerEl() {
+    countdownEl.textContent = countdown + " seconds left";
+}
+
 function timer() {
-    countdownEl.textContent = countdown;
+    updateTimerEl();
 
     setInterval(function() { 
         if (countdown > 0) {
             countdown--;
-            countdownEl.textContent = countdown;
+            updateTimerEl();
             if (countdown == 0) {
                 quizCompleted();
             }
@@ -91,12 +97,13 @@ function choiceButtonClicked() {
     // Check if the text of the button clicked matches the current question's answer.
     if (this.textContent == questions[currentQuestionIndex].answer) {
         score += 1;
+        updateFeedback("Question Correct!");
         console.log("You got the question right. Your current score is " + score);
     } else {
-        console.log("You got the question wrong.");
+        updateFeedback("Question Wrong!");
         countdown -= 5;
         // Update the UI immediately instead of waiting for the next timer cycle.
-        countdownEl.textContent = countdown;
+        updateTimerEl();
     }
 
     // Remove all of the 4 choice buttons to re-add in the next getQuestion call.
@@ -127,9 +134,16 @@ function quizCompleted() {
     countdownEl.textContent = finalGrade + "%";
     title.textContent = "You answered " + score + " out of " + questions.length +  " questions correctly!";
     removeAllChoiceButtons();
-
+    updateFeedback("");
     // Unhide the div section that has the save the initials.
     document.getElementById("saveScoreDiv").setAttribute("style", "display: block");
+
+}
+
+// Takes in a string, and sets it to the textContect of the choiceFeedbackEl.
+function updateFeedback(feedbackText) {
+    var choiceFeedbackEl = document.getElementById("choiceFeedback");
+    choiceFeedbackEl.textContent = feedbackText;
 }
 
 function saveInitialsButtonPressed() {
