@@ -1,9 +1,13 @@
-var countdown = 60 
+// Elements
 var countdownEl = document.getElementById ("countdown")
-var start = document.getElementById ("start-quiz")
-var index = 0
+var startButton = document.getElementById("startButton")
 var title = document.getElementById ("title") 
 var quizEl = document.getElementById ("quiz")
+
+// Quiz Variables
+var currentQuestionIndex = 0
+var countdown = 60 
+// You need a way to track the user's corect questions.
 
 
 // array of questions, choices, and answers
@@ -30,55 +34,64 @@ var questions = [
     },
     {
         question : "Why did the parents kill the human Freddy Krueger?",
-        choices :  ["The parents weren't fond of his sweater", "Freddy was possesed", "Freddy killed their children", "It was by an accidental fire"],
+        choices :  ["The parents weren't fond of his sweater", "Freddy was possesed by the devil", "Freddy killed their children", "It was by an accidental fire"],
         answer : "Freddy killed their children"
     }
 ];
 
-function timer (){
-    setInterval(function(){ 
+function timer() {
+    countdownEl.textContent = "60";
+
+    setInterval(function() { 
         console.log("yes")
-        if (countdown < 0) {}
-        countdown--
+        if (countdown > 0) {
+            countdown--;
+        }
         countdownEl.textContent = countdown;
     }, 1000);
-    
 }
 
 //Start timer count down when the start button is selected. 
-function startQuiz (){
+function startQuiz() {
+    startButton.remove();
      timer();
-     getQuestion ();
+     getQuestion();
 }
+
 //Quiz Questions
-function getQuestion () {
-   var question1 = questions [index];
+function getQuestion() {
+    // Get the current question based on the index which determines
+    // what question the user is on.
+   var question = questions[currentQuestionIndex];
 //    console.log(question1) 
-   title.textContent = question1.question;
-   for (let i = 0; i < question1.choices.length; i++) {
-       const element = question1.choices[i];
+   title.textContent = question.question;
+   for (let i = 0; i < question.choices.length; i++) {
+       const element = question.choices[i];
     //    console.log(element)
-       var choicesBtn = document.createElement ("button");
+       var choicesBtn = document.createElement("button");
        choicesBtn.textContent= element;
        quizEl.append(choicesBtn);
-       choicesBtn.addEventListener ("click", handleResponse)
-
-
+       // When a choices btn is clicked, it will call the choiceButtonClicked function.
+       choicesBtn.addEventListener("click", choiceButtonClicked)
    }
 }
-function handleResponse (){
-    index++
+
+// Each answer choice button calls this function.
+function choiceButtonClicked() {
+    
     var buttonAll = document.querySelectorAll ("button");
     
     for (let i = 0; i < buttonAll.length; i++) {
     buttonAll[i].remove();
 
     }
-    getQuestion ();
 
-
+    // Increment the question index to get the next question when it will reload the quiz.
+    currentQuestionIndex++;
+    getQuestion();
 }
 
-start.addEventListener ("click", startQuiz)
+// Conect the start button to the startQuiz function.
+startButton.addEventListener("click", startQuiz)
 
 
