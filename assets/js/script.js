@@ -7,7 +7,7 @@ var quizEl = document.getElementById ("quiz")
 // Quiz Variables
 var currentQuestionIndex = 0
 var countdown = 60 
-// It will increment by 20 for each question right.
+// It will increment by 1 for each question right.
 var score = 0
 
 // array of questions, choices, and answers
@@ -43,11 +43,13 @@ function timer() {
     countdownEl.textContent = countdown;
 
     setInterval(function() { 
-        console.log("yes")
         if (countdown > 0) {
             countdown--;
+            countdownEl.textContent = countdown;
+            if (countdown == 0) {
+                quizCompleted();
+            }
         }
-        countdownEl.textContent = countdown;
     }, 1000);
 }
 
@@ -86,8 +88,7 @@ function choiceButtonClicked() {
 
     // Check if the text of the button clicked matches the current question's answer.
     if (this.textContent == questions[currentQuestionIndex].answer) {
-        // score = score + 20;
-        score += 20;
+        score += 1;
         console.log("You got the question right. Your current score is " + score);
     } else {
         console.log("You got the question wrong.");
@@ -96,14 +97,32 @@ function choiceButtonClicked() {
         countdownEl.textContent = countdown;
     }
 
+    // Remove all of the 4 choice buttons to re-add in the next getQuestion call.
+    removeAllChoiceButtons();
+    
+    // Increment the question index to get the next question when it will reload the quiz.
+    currentQuestionIndex++;
+    if (currentQuestionIndex < questions.length) {
+        getQuestion();
+    } else {
+        quizCompleted();
+    }
+}
+
+function removeAllChoiceButtons() {
     var buttonAll = document.querySelectorAll("button");
     for (let i = 0; i < buttonAll.length; i++) {
         buttonAll[i].remove();
     }
+}
 
-    // Increment the question index to get the next question when it will reload the quiz.
-    currentQuestionIndex++;
-    getQuestion();
+// This function means that the quiz has been completed.
+function quizCompleted() {
+    countdown = 0;
+    const finalGrade = (score / questions.length) * 100;
+    countdownEl.textContent = finalGrade + "%";
+    title.textContent = "You answered " + score + " correct!";
+    removeAllChoiceButtons();
 }
 
 // Conect the start button to the startQuiz function.
