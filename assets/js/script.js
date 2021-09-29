@@ -3,12 +3,14 @@ var countdownEl = document.getElementById("countdown")
 var startButton = document.getElementById("startButton")
 var title = document.getElementById ("title") 
 var quizEl = document.getElementById ("quiz")
+var saveInitialsButton = document.getElementById("saveInitialsButton");
 
 // Quiz Variables
-var currentQuestionIndex = 0
-var countdown = 60 
+var currentQuestionIndex = 0;
+var countdown = 60;
 // It will increment by 1 for each question right.
-var score = 0
+var score = 0;
+var finalGrade = 0;
 
 // array of questions, choices, and answers
 var questions = [
@@ -34,7 +36,7 @@ var questions = [
     },
     {
         question : "Why did the parents kill the human Freddy Krueger?",
-        choices :  ["The parents weren't fond of his sweater", "Freddy was possesed by the devil", "Freddy killed their children", "It was by an accidental fire"],
+        choices :  ["They weren't fond of his sweater", "Freddy was possesed", "Freddy killed their children", "It was by an accidental fire"],
         answer : "Freddy killed their children"
     }
 ];
@@ -71,9 +73,9 @@ function getQuestion() {
    // each question choice.
    for (let i = 0; i < question.choices.length; i++) {
        const questionChoice = question.choices[i];
-    // Give each choice button names button1, button2, etc. so we can know 
     // later which one the user selected.
        var choiceButton = document.createElement("button");
+       choiceButton.id = "choiceButton" + (i + 1);
        choiceButton.textContent = questionChoice;
        // Add each choice button to the quizEl div.
        quizEl.append(choiceButton);
@@ -99,7 +101,7 @@ function choiceButtonClicked() {
 
     // Remove all of the 4 choice buttons to re-add in the next getQuestion call.
     removeAllChoiceButtons();
-    
+
     // Increment the question index to get the next question when it will reload the quiz.
     currentQuestionIndex++;
     if (currentQuestionIndex < questions.length) {
@@ -110,22 +112,64 @@ function choiceButtonClicked() {
 }
 
 function removeAllChoiceButtons() {
-    var buttonAll = document.querySelectorAll("button");
-    for (let i = 0; i < buttonAll.length; i++) {
-        buttonAll[i].remove();
+    var choiceButtons = document.querySelectorAll("button");
+    for (let i = 0; i < choiceButtons.length; i++) {
+        if (choiceButtons[i].id != "saveInitialsButton") {
+            choiceButtons[i].remove();
+        }
     }
 }
 
 // This function means that the quiz has been completed.
 function quizCompleted() {
     countdown = 0;
-    const finalGrade = (score / questions.length) * 100;
+    finalGrade = (score / questions.length) * 100;
     countdownEl.textContent = finalGrade + "%";
-    title.textContent = "You answered " + score + " correct!";
+    title.textContent = "You answered " + score + " out of " + questions.length +  " questions correctly!";
     removeAllChoiceButtons();
+
+    // Unhide the div section that has the save the initials.
+    document.getElementById("saveScoreDiv").setAttribute("style", "display: block");
 }
 
+function saveInitialsButtonPressed() {
+    var initials = document.getElementById("initialsInputBox").value;
+    console.log("Saving score " + finalGrade + " for " + initials);
+    // Store the final grade to the initials key. key: value
+    localStorage.setItem(initials, finalGrade);
+    document.getElementById("saveScoreDiv").setAttribute("style", "display: none");
+    displayHighScores();
+}
+
+function displayHighScores() {
+    const highScoresDiv = document.getElementById("highScoresDiv");
+    highScoresDiv.setAttribute("style", "display: block");
+
+    // Get all of the keys for the local storage (which are just all the initials).
+    var keys = Object.keys(localStorage);
+    // The index to reference each key by.
+    var i = keys.length;
+    // Create a new element with each initial and their score.
+    while (i--) {
+        // Create an h3 tag.
+        const highScoreHeader = document.createElement("h3");
+        // Store the initials and score for the h3 title.
+        // The getItem is giving me the score for the current key (initials).
+        highScoreHeader.textContent = keys[i] + " - " + localStorage.getItem(keys[i]);
+        // Add that h3 tag to the div to display it.
+        highScoresDiv.append(highScoreHeader);
+    }
+}
+
+// function clearHighScores() {
+//     var keys = Object.keys(localStorage);
+//     var i = keys.length;
+//     while (i--) {
+//         localStorage.removeItem(keys[i]);
+//     }
+//     displayHighScores();
+// }
+
 // Conect the start button to the startQuiz function.
-startButton.addEventListener("click", startQuiz)
-
-
+startButton.addEventListener("click", startQuiz);
+saveInitialsButton.addEventListener("click", saveInitialsButtonPressed);
