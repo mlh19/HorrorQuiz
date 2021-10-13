@@ -14,7 +14,7 @@ This timed triva quiz allows the user to answer 5 questions within 60 seconds. L
 
 # Screenshot
 
-![Start](./assets/images/start.png)
+![Start](./assets/images/QuizScreenshot.png)
 
 
 ![Questions](./assets/images/question.png)
